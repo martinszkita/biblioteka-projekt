@@ -77,11 +77,11 @@ WSGI_APPLICATION = 'biblioteka.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': '/var/lib/mysql/biblioteka',
-        'USER': 'marcin',
-        'PASSWORD': '',
+        'NAME': 'biblioteka',
+        'USER': 'new_username',
+        'PASSWORD': 'new_password',
         'HOST': 'localhost',
-        'PORT':'',
+        'PORT':'3306',
     }
 }
 
