@@ -19,5 +19,6 @@ from django.urls import path,include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path("",include("apka.urls"))
+    path("",include("apka.urls")),
+    path('ksiazki/',include('apka.urls')),
 ]

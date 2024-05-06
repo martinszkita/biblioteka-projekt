@@ -15,8 +15,10 @@ def tytuły(request):
 
 
 
+def display_ksiazki(request):
+    with connection.cursor() as cursor:
+        cursor.execute("SELECT id_ksiazki, tytul FROM ksiazka")
+        ksiazki=cursor.fetchall()
+    return render(request, 'myapp/display_ksiazki.html', {'ksiazki': ksiazki})
 
-#from django.shortcuts import render,HttpResponse
-# Create your views here.
-#def home(request):
-#    return render(request,"base.html")
+    
