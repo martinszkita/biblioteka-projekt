@@ -22,3 +22,12 @@ def wykaz_ksiazek(request):
 def home(request):
     return render(request, 'home.html')
 
+def wyszukiwanie(request):
+    query = request.GET.get('query', '')
+    results = []
+    if query:
+        with connection.cursor() as cursor:
+            # cursor.execute("SELECT tytul FROM tytul WHERE tytul LIKE %s", ['%' + query + '%'])
+            cursor.execute("SELECT tytul FROM tytul WHERE tytul LIKE %s OR opis LIKE %s", ['%' + query + '%', '%' + query + '%']) # razem z szukaniem w opisie
+            results = cursor.fetchall()
+    return render(request, 'wyszukiwanie.html', {'results': results})
