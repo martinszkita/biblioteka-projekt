@@ -1,0 +1,5 @@
+venv/
+a.sql
+baza_danych/
+.vscode/
+biblioteka/biblioteka/__pycache__/*.pyc

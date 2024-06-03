@@ -5,7 +5,7 @@ def tytuły(request):
     # Connect to database
     with connection.cursor() as cursor:
         # Execute SQL query
-        cursor.execute("SELECT title, title_id FROM tytuły")
+        cursor.execute("SELECT `tytul` id_tytulu FROM tytul")
 
         # Fetch all rows
         titles = cursor.fetchall()
@@ -13,12 +13,12 @@ def tytuły(request):
     # Pass data to template
     return render(request, 'titles.html', {'titles': titles})
 
-
-
-def display_ksiazki(request):
+def wykaz_ksiazek(request):
     with connection.cursor() as cursor:
-        cursor.execute("SELECT id_ksiazki, tytul FROM ksiazka")
+        cursor.execute("SELECT id_tytulu, tytul FROM tytul")
         ksiazki=cursor.fetchall()
-    return render(request, 'myapp/display_ksiazki.html', {'ksiazki': ksiazki})
+    return render(request, 'wykaz_ksiazek.html', {'ksiazki': ksiazki})
 
-    
+def home(request):
+    return render(request, 'home.html')
+

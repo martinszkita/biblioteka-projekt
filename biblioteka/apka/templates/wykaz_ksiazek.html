@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>Spis książek</h1>
+    <ul>
+        {% for ksiazka in ksiazki %}
+            <li>{{ ksiazka.0 }} - {{ ksiazka.1 }}</li>
+        {% endfor %}
+    </ul>
+{% endblock %}
