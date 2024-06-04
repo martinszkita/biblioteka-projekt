@@ -3,7 +3,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from django.db import connection
-
+import time
 #def home(request):
 #    return render(request, 'home.html')
 #========================================
@@ -18,6 +18,7 @@ def register(request):
             form.save()
             username = form.cleaned_data.get('username')
             raw_password = form.cleaned_data.get('password1')
+            time.sleep(1)
             user = authenticate(username=username, password=raw_password)
             login(request, user)
             return redirect('home')  # Redirect to home page after successful registration
