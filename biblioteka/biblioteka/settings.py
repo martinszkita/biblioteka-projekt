@@ -74,17 +74,30 @@ WSGI_APPLICATION = 'biblioteka.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
+
+        #'NAME': 'biblioteka',
+        #'USER': 'new_username',
+        #'PASSWORD': 'new_password',
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'biblioteka',
-        'USER': 'new_username',
-        'PASSWORD': 'new_password',
+        'NAME': 'MY',
+        'USER': 'root',
+        'PASSWORD': '1234',
         'HOST': 'localhost',
-        'PORT':'',
+        'PORT':'3307',
+    },
+    'slave': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'MY',
+        'USER': 'root',
+        'PASSWORD': '1234',
+        'HOST': 'localhost',
+        'PORT':'3308',
     }
 }
-
+DATABASE_ROUTERS = ['routers.MasterSlaveRouter']
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
@@ -126,3 +139,6 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+LOGIN_REDIRECT_URL = "apka:home"
+LOGOUT_REDIRECT_URL = "apka:login"

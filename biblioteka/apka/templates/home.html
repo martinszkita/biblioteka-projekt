@@ -1,6 +1,8 @@
-{% extends 'base.html' %}
-
-{% block content %}
-    <h1>home</h1>
-    <!-- Dodaj tutaj treść strony głównej -->
-{% endblock %}
+{% extends "base.html" %}
+{%block content%}
+home page
+<form action="{% url 'apka:logout' %}" method="post">
+    {% csrf_token %}
+    <button type="submit">Logout</button>
+</form>
+{% endblock content %}

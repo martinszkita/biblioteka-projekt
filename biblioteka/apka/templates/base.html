@@ -1,28 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
+    <metacharset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}{% endblock %}</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <title>Login Registraion</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static "css/style.css" %}">
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="/">Strona główna</a>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'wykaz_ksiazek' %}">Wykaz książek</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'wyszukiwanie' %}">Wyszukiwanie książek</a>
-                </li>
-            </ul>
-        </div>
-    </nav>
-    <div class="container">
-        {% block content %}
-        {% endblock %}
-    </div>
+    {%block content%}{% endblock content %}
 </body>
 </html>
