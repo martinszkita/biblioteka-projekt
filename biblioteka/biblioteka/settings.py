@@ -85,18 +85,19 @@ DATABASES = {
         'NAME': 'MY',
         'USER': 'root',
         'PASSWORD': '1234',
-        'HOST': 'localhost',
-        'PORT':'3307',
+        'HOST': 'master',
+        'PORT':'3306',
     },
     'slave': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'MY',
         'USER': 'root',
         'PASSWORD': '1234',
-        'HOST': 'localhost',
-        'PORT':'3308',
+        'HOST': 'slave',
+        'PORT':'3306',
     }
 }
+
 DATABASE_ROUTERS = ['routers.MasterSlaveRouter']
 
 # Password validation
