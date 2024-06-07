@@ -3,7 +3,10 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from django.db import connection
+from .utils import read_operation, write_operation
 import time
+
+
 #def home(request):
 #    return render(request, 'home.html')
 #========================================
@@ -28,7 +31,7 @@ def register(request):
 
 #========================================
 
-
+# czy to jest potrzebne ? \/
 def tytuły(request):
     # Connect to database
     with connection.cursor() as cursor:
@@ -40,21 +43,22 @@ def tytuły(request):
 
     # Pass data to template
     return render(request, 'titles.html', {'titles': titles})
+# czy to jest potrzebne ? /\
 
+
+@login_required
 def wykaz_ksiazek(request):
-    with connection.cursor() as cursor:
-        cursor.execute("SELECT id_tytulu, tytul FROM tytul")
-        ksiazki=cursor.fetchall()
+    query = "SELECT id_tytulu, tytul FROM tytul"
+    ksiazki = read_operation(query)
     return render(request, 'wykaz_ksiazek.html', {'ksiazki': ksiazki})
 
 
-
+@login_required
 def wyszukiwanie(request):
     query = request.GET.get('query', '')
     results = []
     if query:
-        with connection.cursor() as cursor:
-            # cursor.execute("SELECT tytul FROM tytul WHERE tytul LIKE %s", ['%' + query + '%'])
-            cursor.execute("SELECT tytul FROM tytul WHERE tytul LIKE %s OR opis LIKE %s", ['%' + query + '%', '%' + query + '%']) # razem z szukaniem w opisie
-            results = cursor.fetchall()
+        sql_query = "SELECT tytul FROM tytul WHERE tytul LIKE %s OR opis LIKE %s"
+        params = ['%' + query + '%', '%' + query + '%']
+        results = read_operation(sql_query, params)
     return render(request, 'wyszukiwanie.html', {'results': results})

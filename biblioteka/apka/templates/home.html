@@ -1,8 +1,12 @@
 {% extends "base.html" %}
 {%block content%}
-home page
+<h1>Home Page</h1>
 <form action="{% url 'apka:logout' %}" method="post">
     {% csrf_token %}
     <button type="submit">Logout</button>
 </form>
+<button onclick="location.href='{% url 'wykaz_ksiazek' %}'">Wykaz Książek</button>
+<button onclick="location.href='{% url 'wyszukiwanie' %}'">Wyszukiwanie</button>
+</body>
+
 {% endblock content %}
