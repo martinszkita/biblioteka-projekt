@@ -56,9 +56,14 @@ def wykaz_ksiazek(request):
 @login_required
 def wyszukiwanie(request):
     query = request.GET.get('query', '')
+    search_by = request.GET.get('search_by', 'tytul') #jeśli nie wyspecyfikowano inaczej to szukamy po tytule
     results = []
+
     if query:
-        sql_query = "SELECT tytul FROM tytul WHERE tytul LIKE %s OR opis LIKE %s"
-        params = ['%' + query + '%', '%' + query + '%']
+        if search_by == 'tytul':
+            sql_query = "SELECT tytul FROM tytul WHERE tytul LIKE %s"
+        elif search_by == 'opis':
+            sql_query = "SELECT tytul FROM tytul WHERE opis LIKE %s"
+        params = ['%' + query + '%']
         results = read_operation(sql_query, params)
     return render(request, 'wyszukiwanie.html', {'results': results})

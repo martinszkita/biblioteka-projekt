@@ -4,7 +4,11 @@
 {% block content %}
 <h1>Wyszukiwanie książek</h1>
 <form method="GET" action="{% url 'wyszukiwanie' %}">
-    <input type="text" name="query" placeholder="Wpisz tytuł książki">
+    <select name="search_by">
+        <option value="tytul">Tytuł</option>
+        <option value="opis">Opis</option> 
+    </select>
+    <input type="text" name="query" placeholder="Wpisz szukaną frazę">
     <button type="submit">Szukaj</button>
     <button type="button" onclick="document.getElementsByName('query')[0].value = '';">Wyczyść</button>
 </form>
