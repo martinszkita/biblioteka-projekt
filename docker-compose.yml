@@ -1,0 +1,42 @@
+version: '3.8'
+services:
+  master:
+    image: mysql:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: 1234
+      MYSQL_DATABASE: MY
+      MYSQL_MASTER_HOST: localhost
+      MYSQL_REPLICATION_USER: root
+      MYSQL_REPLICATION_PASSWORD: 1234
+    ports:
+      - "3306:3306"
+
+  slave:
+    image: mysql:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: 1234
+      MYSQL_DATABASE: MY
+      MYSQL_REPLICATION_USER: root
+      MYSQL_REPLICATION_PASSWORD: 1234
+      MYSQL_MASTER_HOST: localhost
+      MYSQL_MASTER_PORT: 3306
+    depends_on:
+      - master
+    ports:
+      - "3307:3306"
+
+  django:
+    build: ./biblioteka
+    command: bash -c "
+      sleep 5 && python manage.py migrate
+      && python manage.py runserver 0.0.0.0:8000
+      "
+    volumes:
+      - .:/code
+    working_dir: /code/biblioteka
+    ports:
+      - "8000:8000"
+    depends_on:
+      - master
+      - slave
+

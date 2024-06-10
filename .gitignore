@@ -1,4 +1,4 @@
-venv/
+env/
 a.sql
 baza_danych/
 .vscode/
