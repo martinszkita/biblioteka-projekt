@@ -7,6 +7,7 @@
     <select name="search_by">
         <option value="tytul">Tytuł</option>
         <option value="opis">Opis</option> 
+        <option value="autor">Autor</option> 
     </select>
     <input type="text" name="query" placeholder="Wpisz szukaną frazę">
     <button type="submit">Szukaj</button>
@@ -14,11 +15,38 @@
 </form>
 {% if results %}
 <h2>Wyniki wyszukiwania:</h2>
-<ul>
+<table>
+    <thead>
+        <tr>
+            <th>tytuł</th>
+            <th>imie</th>
+            <th>nazwisko</th>
+            <th>opis</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for book in results %}
+            <tr>
+                <td> {{book.0}}</td>
+                <td> {{book.1}}</td>
+                <td> {{book.2}}</td>
+                <td> {{book.3}}</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+
+
+
+</table>
+
+
+
+
+{% comment %} <ul>
     {% for book in results %}
-    <li>{{ book.0 }}</li>
+    <li>{{ book.0 }} - {{ book.1 }} {{ book.2 }} {{ book.3 }}</li>
     {% endfor %}
-</ul>
+</ul> {% endcomment %}
 {% else %}
     <p>Brak wyników.</p>
 {% endif %}

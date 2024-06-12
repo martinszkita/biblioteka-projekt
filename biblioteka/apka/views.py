@@ -61,9 +61,11 @@ def wyszukiwanie(request):
 
     if query:
         if search_by == 'tytul':
-            sql_query = "SELECT tytul FROM tytul WHERE tytul LIKE %s"
+            sql_query = "SELECT tytul, autor.imie, autor.nazwisko, opis FROM tytul JOIN autor on autor.id_autora=tytul.id_autora WHERE tytul LIKE %s"
         elif search_by == 'opis':
-            sql_query = "SELECT tytul FROM tytul WHERE opis LIKE %s"
-        params = ['%' + query + '%']
+            sql_query = "SELECT tytul , autor.imie, autor.nazwisko, opis FROM tytul JOIN autor on autor.id_autora=tytul.id_autora WHERE opis LIKE %s"
+        elif search_by == 'autor':
+            sql_query = "SELECT tytul, autor.imie, autor.nazwisko, opis  FROM tytul JOIN autor on autor.id_autora=tytul.id_autora WHERE autor.imie LIKE %s OR autor.nazwisko LIKE %s"
+        params = ['%' + query + '%', '%' + query + '%'] if search_by == 'autor' else ['%' + query + '%']
         results = read_operation(sql_query, params)
     return render(request, 'wyszukiwanie.html', {'results': results})
