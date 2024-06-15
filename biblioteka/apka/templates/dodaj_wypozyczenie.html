@@ -1,0 +1,33 @@
+<!-- your_template.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dodaj wypożyczenie</title>
+</head>
+<body>
+    <h2>Dodaj wypożyczenie</h2>
+    <form method="post">
+        {% csrf_token %}
+        <label for="id_ksiazki">ID Książki:</label>
+        <input type="number" id="id_ksiazki" name="id_ksiazki"><br><br>
+
+        <label for="data_wypozyczenia">Data Wypożyczenia:</label>
+        <input type="date" id="data_wypozyczenia" name="data_wypozyczenia"><br><br>
+
+        <label for="data_zwrotu">Data Zwrotu:</label>
+        <input type="date" id="data_zwrotu" name="data_zwrotu"><br><br>
+
+        <label for="id_czytelnika">ID Czytelnika:</label>
+        <input type="number" id="id_czytelnika" name="id_czytelnika"><br><br>
+
+        <button type="submit">Save</button>
+    </form>
+
+    <!-- Optionally, display a success message -->
+    {% if messages %}
+        {% for message in messages %}
+            <div>{{ message }}</div>
+        {% endfor %}
+    {% endif %}
+</body>
+</html>

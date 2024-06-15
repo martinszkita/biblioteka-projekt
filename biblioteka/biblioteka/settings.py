@@ -27,6 +27,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+CORS_ALLOW_CREDENTIALS = True
+
 
 # Application definition
 
@@ -87,6 +89,14 @@ DATABASES = {
         'PASSWORD': '1234',
         'HOST': 'localhost',
         'PORT':'3307',
+        'OPTIONS': {
+            'ssl': {
+                'ca': '/path/to/ca-cert.pem',
+                'cert': '/path/to/client-cert.pem',
+                'key': '/path/to/client-key.pem'
+            }
+        }
+
     },
     'slave': {
         'ENGINE': 'django.db.backends.mysql',
@@ -96,6 +106,7 @@ DATABASES = {
         'HOST': 'localhost',
         'PORT':'3308',
     }
+    
 }
 DATABASE_ROUTERS = ['routers.MasterSlaveRouter']
 

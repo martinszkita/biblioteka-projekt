@@ -3,16 +3,16 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from django.db import connection
+from django.conf import settings
+from django.http import HttpResponse
 from .utils import read_operation, write_operation
 import time
+import datetime
 
-
-#def home(request):
-#    return render(request, 'home.html')
-#========================================
 @login_required
 def home(request):
-    return render(request, 'home.html', {})
+    context={'username':request.user.username}
+    return render(request, 'home.html',context)
 
 def register(request):
     if request.method == 'POST':
@@ -24,12 +24,15 @@ def register(request):
             time.sleep(1)
             user = authenticate(username=username, password=raw_password)
             login(request, user)
-            return redirect('home')  # Redirect to home page after successful registration
+
+            #print(request.user)
+            response = HttpResponse('home')
+        
+            return response  # Redirect to home page after successful registration
     else:
         form = UserCreationForm()
     return render(request, 'registration/register.html', {'form': form})
 
-#========================================
 
 # czy to jest potrzebne ? \/
 def tytuły(request):
@@ -52,6 +55,27 @@ def wykaz_ksiazek(request):
     ksiazki = read_operation(query)
     return render(request, 'wykaz_ksiazek.html', {'ksiazki': ksiazki})
 
+@login_required
+def wykaz_wypozyczen(request):
+    query = "SELECT * from wypozyczenia"
+    return render(request, 'wykaz_wypozyczen.html', {'wypozyczenia': wypozyczenia})
+
+@login_required
+def dodaj_wypozyczenie(request):
+    if request.method == 'POST':
+        id_ksiazki = request.POST.get('id_ksiazki')
+        data_wypozyczenia = request.POST.get('data_wypozyczenia')
+        data_zwrotu = request.POST.get('data_zwrotu')
+        id_czytelnika = request.POST.get('id_czytelnika')
+        with connection.cursor() as cursor:
+            cursor.execute("""
+                INSERT INTO wypozyczenie (id_ksiazki, data_wypozyczenia, data_zwrotu, id_czytelnika)
+                VALUES (%s, %s, %s, %s)
+            """, [id_ksiazki, data_wypozyczenia, data_zwrotu, id_czytelnika])
+        
+        return redirect(request.path_info)  # Redirect to a success URL or another view
+
+    return render(request, 'dodaj_wypozyczenie.html')
 
 @login_required
 def wyszukiwanie(request):

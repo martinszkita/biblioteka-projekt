@@ -1,4 +1,3 @@
-
 from django.db import connections, transaction
 
 def read_operation(query, params=None):

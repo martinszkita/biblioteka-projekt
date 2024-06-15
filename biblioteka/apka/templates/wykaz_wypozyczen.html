@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>Wykaz wypożyczeń</h1>
+    <ul>
+        {% for wypozyczenie in wypozyczenia %}
+            <li>{{ wypozyczenie.0 }} - {{ wypozyczenie.1 }} - {{ wypozyczenie.2 }} {{ wypozyczenie.3 }}</li>
+        {% endfor %}
+    </ul>
+{% endblock %}
