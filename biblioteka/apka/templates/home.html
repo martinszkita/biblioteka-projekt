@@ -5,15 +5,16 @@
     {% csrf_token %}
     <button type="submit">Logout</button>
 </form>
+
 <button onclick="location.href='{% url 'wykaz_ksiazek' %}'">Wykaz Książek</button>
 <button onclick="location.href='{% url 'wyszukiwanie' %}'">Wyszukiwanie</button>
 
 {% if username == "bibliotekarz" %}
 <button onclick="location.href='{% url 'wykaz_wypozyczen' %}'">Wykaz wypożyczeń</button>
-{% endif %}
-
 <button onclick="location.href='{% url 'dodaj_wypozyczenie' %}'">Dodaj wypożyczenie</button>
 <button onclick="location.href='{% url 'usun_wypozyczenie' %}'">Usuń wypożyczenie</button>
+{% endif %}
+
 <p>Witaj {{username}} !</p>
 </body>
 

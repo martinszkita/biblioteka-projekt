@@ -34,19 +34,6 @@ def register(request):
     return render(request, 'registration/register.html', {'form': form})
 
 
-# czy to jest potrzebne ? \/
-def tytuły(request):
-    # Connect to database
-    with connection.cursor() as cursor:
-        # Execute SQL query
-        cursor.execute("SELECT `tytul` id_tytulu FROM tytul")
-
-        # Fetch all rows
-        titles = cursor.fetchall()
-
-    # Pass data to template
-    return render(request, 'titles.html', {'titles': titles})
-# czy to jest potrzebne ? /\
 
 
 @login_required
@@ -65,19 +52,19 @@ def wykaz_ksiazek(request):
     d='dowolne'
 
     if id_autora !=d and id_gatunku != d:
-         query_results = "SELECT autor.imie, autor.nazwisko, gatunek.nazwa, tytul.opis FROM autor JOIN tytul ON tytul.id_autora=autor.id_autora JOIN gatunek on tytul.id_gatunku=gatunek.id_gatunku WHERE autor.id_autora=%s AND gatunek.id_gatunku = %s"
+         query_results = "SELECT autor.imie, autor.nazwisko, gatunek.nazwa, tytul.opis, tytul.tytul FROM autor JOIN tytul ON tytul.id_autora=autor.id_autora JOIN gatunek on tytul.id_gatunku=gatunek.id_gatunku WHERE autor.id_autora=%s AND gatunek.id_gatunku = %s"
          params = [id_autora, id_gatunku]
          print(' case 1')
     elif id_autora == d and id_gatunku != d:
-        query_results = "SELECT autor.imie, autor.nazwisko, gatunek.nazwa,tytul.opis FROM autor JOIN tytul ON tytul.id_autora=autor.id_autora JOIN gatunek on tytul.id_gatunku=gatunek.id_gatunku WHERE gatunek.id_gatunku = %s"
+        query_results = "SELECT autor.imie, autor.nazwisko, gatunek.nazwa,tytul.opis,tytul.tytul FROM autor JOIN tytul ON tytul.id_autora=autor.id_autora JOIN gatunek on tytul.id_gatunku=gatunek.id_gatunku WHERE gatunek.id_gatunku = %s"
         params = [id_gatunku]
         print("case 2")
     elif id_autora != d and id_gatunku == d:
-        query_results = "SELECT autor.imie, autor.nazwisko, gatunek.nazwa , tytul.opis FROM autor JOIN tytul ON tytul.id_autora=autor.id_autora JOIN gatunek on tytul.id_gatunku=gatunek.id_gatunku WHERE autor.id_autora=%s"
+        query_results = "SELECT autor.imie, autor.nazwisko, gatunek.nazwa , tytul.opis, tytul.tytul FROM autor JOIN tytul ON tytul.id_autora=autor.id_autora JOIN gatunek on tytul.id_gatunku=gatunek.id_gatunku WHERE autor.id_autora=%s"
         params = [id_autora]
         print('case3')
     else : # oba dowolne
-        query_results = "SELECT autor.imie, autor.nazwisko, gatunek.nazwa , tytul.opis FROM autor JOIN tytul ON tytul.id_autora=autor.id_autora JOIN gatunek on tytul.id_gatunku=gatunek.id_gatunku"
+        query_results = "SELECT autor.imie, autor.nazwisko, gatunek.nazwa , tytul.opis, tytul.tytul FROM autor JOIN tytul ON tytul.id_autora=autor.id_autora JOIN gatunek on tytul.id_gatunku=gatunek.id_gatunku"
         params = []
         print('case 4')
 
@@ -134,11 +121,11 @@ def wyszukiwanie(request):
 
     if query:
         if search_by == 'tytul':
-            sql_query = "SELECT tytul, autor.imie, autor.nazwisko, opis FROM tytul JOIN autor on autor.id_autora=tytul.id_autora WHERE tytul LIKE %s"
+            sql_query = "SELECT tytul, autor.imie, autor.nazwisko, gatunek.nazwa, opis FROM tytul JOIN autor on autor.id_autora=tytul.id_autora JOIN gatunek on gatunek.id_gatunku=tytul.id_gatunku WHERE tytul LIKE %s"
         elif search_by == 'opis':
-            sql_query = "SELECT tytul , autor.imie, autor.nazwisko, opis FROM tytul JOIN autor on autor.id_autora=tytul.id_autora WHERE opis LIKE %s"
+            sql_query = "SELECT tytul , autor.imie, autor.nazwisko,gatunek.nazwa, opis FROM tytul JOIN autor on autor.id_autora=tytul.id_autora JOIN gatunek on gatunek.id_gatunku=tytul.id_gatunku WHERE opis LIKE %s"
         elif search_by == 'autor':
-            sql_query = "SELECT tytul, autor.imie, autor.nazwisko, opis  FROM tytul JOIN autor on autor.id_autora=tytul.id_autora WHERE autor.imie LIKE %s OR autor.nazwisko LIKE %s"
+            sql_query = "SELECT tytul, autor.imie, autor.nazwisko, gatunek.nazwa, opis  FROM tytul JOIN autor on autor.id_autora=tytul.id_autora JOIN gatunek on gatunek.id_gatunku=tytul.id_gatunku WHERE autor.imie LIKE %s OR autor.nazwisko LIKE %s"
         params = ['%' + query + '%', '%' + query + '%'] if search_by == 'autor' else ['%' + query + '%']
         results = read_operation(sql_query, params)
     return render(request, 'wyszukiwanie.html', {'results': results})

@@ -21,16 +21,18 @@
     {% if ksiazki %}
     <table>
         <thead>
-            <tr>
+            <tr>    
+                <th>tytuł</th>
                 <th>imie</th>
                 <th>nazwisko</th>
-                <th>tytuł</th>
+                <th>gatunek</th>
                 <th>opis</th>
             </tr>
         </thead>
         <tbody>
             {% for ksiazka in ksiazki %}
                 <tr>
+                    <td> {{ksiazka.4}}</td>
                     <td> {{ksiazka.0}}</td>
                     <td> {{ksiazka.1}}</td>
                     <td> {{ksiazka.2}}</td>
