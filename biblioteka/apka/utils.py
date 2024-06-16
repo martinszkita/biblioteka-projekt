@@ -8,6 +8,11 @@ def read_operation(query, params=None):
             return cursor.fetchall()
 
 def write_operation(query, params=None):
-    with transaction.atomic(using='default'):
-        with connections['default'].cursor() as cursor:
-            cursor.execute(query, params)
+    try:
+        with transaction.atomic(using='default'):
+            with connections['default'].cursor() as cursor:
+                cursor.execute(query, params)
+    except Exception as e:
+        # Handle the exception (e.g., logging)
+        print(f"Error during write operation: {e}")   
+        raise          
