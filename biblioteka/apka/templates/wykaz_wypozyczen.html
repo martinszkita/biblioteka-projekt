@@ -2,9 +2,11 @@
 
 {% block content %}
     <header>
-        <a href="{% url 'home' %}" class="home-button">Home</a>
+        <a href="{% url 'home' %}">
+            <button>Home</button>
+        </a>
     </header>
-    
+
     {% if wypozyczenia %}
     <h2>Wypożyczenia</h2>
     <table>

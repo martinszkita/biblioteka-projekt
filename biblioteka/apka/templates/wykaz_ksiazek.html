@@ -2,7 +2,9 @@
 
 {% block content %}
     <header>
-        <a href="{% url 'home' %}" class="home-button">Home</a>
+        <a href="{% url 'home' %}">
+            <button>Home</button>
+        </a>
     </header>
     <form method="GET">
         <select name="autor_id">
