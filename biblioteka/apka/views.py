@@ -88,7 +88,8 @@ def wykaz_ksiazek(request):
 
 @login_required
 def wykaz_wypozyczen(request):
-    query = "SELECT * from wypozyczenie"
+    ############################################### 
+    query = "SELECT czytelnik.imie, czytelnik.nazwisko, tytul.tytul, autor.imie, autor.nazwisko, wypozyczenie.data_wypozyczenia, wypozyczenie.data_zwrotu from wypozyczenie JOIN czytelnik on czytelnik.id_czytelnika=wypozyczenie.id_czytelnika JOIN ksiazka on ksiazka.id_ksiazki=wypozyczenie.id_ksiazki JOIN tytul on tytul.id_tytulu=ksiazka.id_tytulu JOIN autor on autor.id_autora=tytul.id_autora"
     wypozyczenia = read_operation(query)
     return render(request, 'wykaz_wypozyczen.html', {'wypozyczenia': wypozyczenia})
 
