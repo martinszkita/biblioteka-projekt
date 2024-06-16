@@ -1,10 +1,36 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <h1>Wykaz wypożyczeń</h1>
-    <ul>
+    {% if wypozyczenia %}
+<h2>Wypożyczenia</h2>
+<table>
+    <thead>
+        <tr>
+            <th>imie</th>
+            <th>nazwisko</th>
+            <th>tytuł</th>
+            <th>imie autora</th>
+            <th>nazwisko autora</th>
+            <th>data wypożyczenia</th>
+            <th>data zwrotu</th>
+        </tr>
+    </thead>
+    <tbody>
         {% for wypozyczenie in wypozyczenia %}
-            <li>{{ wypozyczenie.0 }}  {{ wypozyczenie.1 }}  {{ wypozyczenie.2 }} {{ wypozyczenie.3 }} {{ wypozyczenie.4 }} {{ wypozyczenie.5 }}{{ wypozyczenie.6 }}</li>
+            <tr>
+                <td> {{wypozyczenie.0}}</td>
+                <td> {{wypozyczenie.1}}</td>
+                <td> {{wypozyczenie.2}}</td>
+                <td> {{wypozyczenie.3}}</td>
+                <td> {{wypozyczenie.4}}</td>
+                <td> {{wypozyczenie.5}}</td>
+                <td> {{wypozyczenie.6}}</td>
+            </tr>
         {% endfor %}
-    </ul>
+    </tbody>
+</table>
+
+{% else %}
+    <p>Brak wyników.</p>
+{% endif %}
 {% endblock %}
