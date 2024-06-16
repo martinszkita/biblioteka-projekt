@@ -1,7 +1,15 @@
 <!-- wyszukiwanie.html -->
 {% extends 'base.html' %}
 
+
+
+
 {% block content %}
+
+<header>
+    <a href="{% url 'home' %}" class="home-button">Home</a>
+</header>
+
 <h1>Wyszukiwanie książek</h1>
 <form method="GET" action="{% url 'wyszukiwanie' %}">
     <select name="search_by">

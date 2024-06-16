@@ -1,6 +1,9 @@
 {% extends 'base.html' %}
 
 {% block content %}
+    <header>
+        <a href="{% url 'home' %}" class="home-button">Home</a>
+    </header>
     <form method="GET">
         <select name="autor_id">
             <option value='dowolne'>dowolne</option>

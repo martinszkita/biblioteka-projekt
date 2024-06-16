@@ -5,6 +5,9 @@
     <title>Dodaj wypożyczenie</title>
 </head>
 <body>
+    <header>
+        <a href="{% url 'home' %}" class="home-button">Home</a>
+    </header>
     <h2>Dodaj wypożyczenie</h2>
     <form method="post">
         {% csrf_token %}

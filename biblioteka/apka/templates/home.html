@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {%block content%}
-<h1>Home Page</h1>
+<h1>Home</h1>
 <form action="{% url 'apka:logout' %}" method="post">
     {% csrf_token %}
     <button type="submit">Logout</button>
@@ -15,7 +15,7 @@
 <button onclick="location.href='{% url 'usun_wypozyczenie' %}'">Usuń wypożyczenie</button>
 {% endif %}
 
-<p>Witaj {{username}} !</p>
+<p>Jesteś zalogowany jako {{username}} .</p>
 </body>
 
 {% endblock content %}

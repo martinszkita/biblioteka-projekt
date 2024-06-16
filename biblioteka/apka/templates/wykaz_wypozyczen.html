@@ -1,6 +1,10 @@
 {% extends 'base.html' %}
 
 {% block content %}
+    <header>
+        <a href="{% url 'home' %}" class="home-button">Home</a>
+    </header>
+    
     {% if wypozyczenia %}
     <h2>Wypożyczenia</h2>
     <table>
