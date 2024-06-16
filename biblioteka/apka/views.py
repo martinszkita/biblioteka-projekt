@@ -62,10 +62,25 @@ def wykaz_ksiazek(request):
     query_gatunki = "SELECT nazwa, id_gatunku FROM gatunek"
     gatunki=read_operation(query_gatunki)
 
-    #query_results = "SELECT * FROM ksiazka"
-    query_results = "SELECT autor.imie, autor.nazwisko, gatunek.nazwa FROM autor JOIN tytul ON tytul.id_autora=autor.id_autora JOIN gatunek on tytul.id_gatunku=gatunek.id_gatunku WHERE autor.id_autora=%s AND gatunek.id_gatunku = %s"
-    
-    params = [id_autora, id_gatunku]
+    d='dowolne'
+
+    if id_autora !=d and id_gatunku != d:
+         query_results = "SELECT autor.imie, autor.nazwisko, gatunek.nazwa FROM autor JOIN tytul ON tytul.id_autora=autor.id_autora JOIN gatunek on tytul.id_gatunku=gatunek.id_gatunku WHERE autor.id_autora=%s AND gatunek.id_gatunku = %s"
+         params = [id_autora, id_gatunku]
+         print(' case 1')
+    elif id_autora == d and id_gatunku != d:
+        query_results = "SELECT autor.imie, autor.nazwisko, gatunek.nazwa FROM autor JOIN tytul ON tytul.id_autora=autor.id_autora JOIN gatunek on tytul.id_gatunku=gatunek.id_gatunku WHERE gatunek.id_gatunku = %s"
+        params = [id_gatunku]
+        print("case 2")
+    elif id_autora != d and id_gatunku == d:
+        query_results = "SELECT autor.imie, autor.nazwisko, gatunek.nazwa FROM autor JOIN tytul ON tytul.id_autora=autor.id_autora JOIN gatunek on tytul.id_gatunku=gatunek.id_gatunku WHERE autor.id_autora=%s"
+        params = [id_autora]
+        print('case3')
+    else : # oba dowolne
+        query_results = "SELECT autor.imie, autor.nazwisko, gatunek.nazwa FROM autor JOIN tytul ON tytul.id_autora=autor.id_autora JOIN gatunek on tytul.id_gatunku=gatunek.id_gatunku"
+        params = []
+        print('case 4')
+
     #params=[]
     results = read_operation(query_results, params)
     print(results)
