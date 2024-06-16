@@ -51,13 +51,30 @@ def tytuły(request):
 
 @login_required
 def wykaz_ksiazek(request):
-    query = "SELECT id_tytulu, tytul FROM tytul"
-    ksiazki = read_operation(query)
-    return render(request, 'wykaz_ksiazek.html', {'ksiazki': ksiazki})
+    id_autora=request.GET.get('autor_id', 'dowolne')
+    id_gatunku= request.GET.get('gatunek_id', 'dowolne')
+    print(id_autora)
+    print(id_gatunku)
+
+    query_autorzy = "SELECT imie, nazwisko, id_autora FROM autor"
+    autorzy=read_operation(query_autorzy)
+
+    query_gatunki = "SELECT nazwa, id_gatunku FROM gatunek"
+    gatunki=read_operation(query_gatunki)
+
+    #query_results = "SELECT * FROM ksiazka"
+    query_results = "SELECT autor.imie, autor.nazwisko, gatunek.nazwa FROM autor JOIN tytul ON tytul.id_autora=autor.id_autora JOIN gatunek on tytul.id_gatunku=gatunek.id_gatunku WHERE autor.id_autora=%s AND gatunek.id_gatunku = %s"
+    
+    params = [id_autora, id_gatunku]
+    #params=[]
+    results = read_operation(query_results, params)
+    print(results)
+    return render(request, 'wykaz_ksiazek.html', {'ksiazki': results, 'autorzy' : autorzy, 'gatunki':gatunki})
 
 @login_required
 def wykaz_wypozyczen(request):
-    query = "SELECT * from wypozyczenia"
+    query = "SELECT * from wypozyczenie"
+    wypozyczenia = read_operation(query)
     return render(request, 'wykaz_wypozyczen.html', {'wypozyczenia': wypozyczenia})
 
 @login_required

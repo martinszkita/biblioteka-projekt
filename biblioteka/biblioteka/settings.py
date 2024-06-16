@@ -91,12 +91,11 @@ DATABASES = {
         'PORT':'3307',
         'OPTIONS': {
             'ssl': {
-                'ca': '/path/to/ca-cert.pem',
-                'cert': '/path/to/client-cert.pem',
-                'key': '/path/to/client-key.pem'
+                'ca': 'ssl/ca-cert.pem',
+                'cert': 'ssl/client-cert.pem',
+                'key': 'ssl/client-key.pem'
             }
         }
-
     },
     'slave': {
         'ENGINE': 'django.db.backends.mysql',
@@ -106,7 +105,6 @@ DATABASES = {
         'HOST': 'localhost',
         'PORT':'3308',
     }
-    
 }
 DATABASE_ROUTERS = ['routers.MasterSlaveRouter']
 

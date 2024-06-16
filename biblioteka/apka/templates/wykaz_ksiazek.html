@@ -1,10 +1,30 @@
 {% extends 'base.html' %}
 
 {% block content %}
+    <form method="GET">
+        <select name="autor_id">
+            <option value='dowolne'>dowolne</option>
+            {%for autor in autorzy%}
+                <option value={{autor.2}}>{{autor.0}} {{autor.1}}</option>
+            {%endfor%}
+        </select>
+        <select name="gatunek_id">
+            <option value='dowolne'>dowolne</option>
+            {%for gatunek in gatunki%}
+                <option value={{gatunek.1}}>{{gatunek.0}}</option>
+            {%endfor%}
+        </select>
+        <button type='submit'>Wyszukaj</button>
+    </form>
+
     <h1>Spis książek</h1>
-    <ul>
-        {% for ksiazka in ksiazki %}
-            <li>{{ ksiazka.0 }} - {{ ksiazka.1 }}</li>
-        {% endfor %}
-    </ul>
+        {% if ksiazki%}
+        <ul>
+            {% for ksiazka in ksiazki %}
+                <li>{{ ksiazka.0 }} - {{ ksiazka.1 }}- {{ ksiazka.2 }}- {{ ksiazka.3 }}</li>
+            {% endfor %}
+        </ul> 
+        {%else%}
+            <p>brak wynikow</p>
+        {%endif%}
 {% endblock %}
