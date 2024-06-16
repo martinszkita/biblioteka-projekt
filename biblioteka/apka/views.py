@@ -6,6 +6,7 @@ from django.db import connection
 from django.conf import settings
 from django.http import HttpResponse
 from .utils import read_operation, write_operation
+from django.db import connection, transaction
 import time
 import datetime
 
@@ -86,15 +87,36 @@ def dodaj_wypozyczenie(request):
         data_wypozyczenia = request.POST.get('data_wypozyczenia')
         data_zwrotu = request.POST.get('data_zwrotu')
         id_czytelnika = request.POST.get('id_czytelnika')
-        with connection.cursor() as cursor:
-            cursor.execute("""
-                INSERT INTO wypozyczenie (id_ksiazki, data_wypozyczenia, data_zwrotu, id_czytelnika)
-                VALUES (%s, %s, %s, %s)
-            """, [id_ksiazki, data_wypozyczenia, data_zwrotu, id_czytelnika])
-        
-        return redirect(request.path_info)  # Redirect to a success URL or another view
 
+        try:
+            with transaction.atomic(using='default'):
+                with connection.cursor() as cursor:
+                    cursor.execute("""
+                        INSERT INTO wypozyczenie (id_ksiazki)
+                        VALUES (%s)
+                    """, [id_ksiazki])
+                    cursor.execute("""
+                        INSERT INTO wypozyczenie (data_wypozyczenia)
+                        VALUES (%s)
+                    """, [data_wypozyczenia])
+                    cursor.execute("""
+                        INSERT INTO wypozyczenie (data_zwrotu)
+                        VALUES (%s)
+                    """, [data_zwrotu])
+                    cursor.execute("""
+                        INSERT INTO wypozyczenie (id_czytelnika)
+                        VALUES (%s)
+                    """, [id_czytelnika])
+
+            return redirect(request.path_info)
+        except Exception as e:
+            print(e)
+            return render(request, 'dodaj_wypozyczenie.html', {'error': 'Wystąpił błąd podczas dodawania danych'}) #Re reander the same form along with error message
+    
     return render(request, 'dodaj_wypozyczenie.html')
+
+
+        
 
 @login_required
 def usun_wypozyczenie(request):
