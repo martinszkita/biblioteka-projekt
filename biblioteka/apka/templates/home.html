@@ -13,7 +13,8 @@
 {% endif %}
 
 <button onclick="location.href='{% url 'dodaj_wypozyczenie' %}'">Dodaj wypożyczenie</button>
-<p>{{username}}</p>
+<button onclick="location.href='{% url 'usun_wypozyczenie' %}'">Usuń wypożyczenie</button>
+<p>Witaj {{username}} !</p>
 </body>
 
 {% endblock content %}

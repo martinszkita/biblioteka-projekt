@@ -88,7 +88,6 @@ def wykaz_ksiazek(request):
 
 @login_required
 def wykaz_wypozyczen(request):
-    ############################################### 
     query = "SELECT czytelnik.imie, czytelnik.nazwisko, tytul.tytul, autor.imie, autor.nazwisko, wypozyczenie.data_wypozyczenia, wypozyczenie.data_zwrotu from wypozyczenie JOIN czytelnik on czytelnik.id_czytelnika=wypozyczenie.id_czytelnika JOIN ksiazka on ksiazka.id_ksiazki=wypozyczenie.id_ksiazki JOIN tytul on tytul.id_tytulu=ksiazka.id_tytulu JOIN autor on autor.id_autora=tytul.id_autora"
     wypozyczenia = read_operation(query)
     return render(request, 'wykaz_wypozyczen.html', {'wypozyczenia': wypozyczenia})
@@ -109,6 +108,24 @@ def dodaj_wypozyczenie(request):
         return redirect(request.path_info)  # Redirect to a success URL or another view
 
     return render(request, 'dodaj_wypozyczenie.html')
+
+@login_required
+def usun_wypozyczenie(request):
+    id_wypozyczenia = request.GET.get('wypozyczenie_id','')
+    if id_wypozyczenia:
+        query_delete = "DELETE from wypozyczenie WHERE wypozyczenie.id_wypozyczenia=%s"
+        params = [id_wypozyczenia]
+        wypozyczenia = write_operation(query_delete, params)
+
+   
+    query = "SELECT wypozyczenie.id_wypozyczenia, czytelnik.imie, czytelnik.nazwisko, tytul.tytul, autor.imie, autor.nazwisko, wypozyczenie.data_wypozyczenia, wypozyczenie.data_zwrotu from wypozyczenie JOIN czytelnik on czytelnik.id_czytelnika=wypozyczenie.id_czytelnika JOIN ksiazka on ksiazka.id_ksiazki=wypozyczenie.id_ksiazki JOIN tytul on tytul.id_tytulu=ksiazka.id_tytulu JOIN autor on autor.id_autora=tytul.id_autora"
+    
+    wypozyczenia = read_operation(query)
+
+    print(wypozyczenia)
+
+    return render(request, 'usun_wypozyczenie.html', {'wypozyczenia': wypozyczenia})
+
 
 @login_required
 def wyszukiwanie(request):
