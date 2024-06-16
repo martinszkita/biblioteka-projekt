@@ -2,35 +2,35 @@
 
 {% block content %}
     {% if wypozyczenia %}
-<h2>Wypożyczenia</h2>
-<table>
-    <thead>
-        <tr>
-            <th>imie</th>
-            <th>nazwisko</th>
-            <th>tytuł</th>
-            <th>imie autora</th>
-            <th>nazwisko autora</th>
-            <th>data wypożyczenia</th>
-            <th>data zwrotu</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for wypozyczenie in wypozyczenia %}
+    <h2>Wypożyczenia</h2>
+    <table>
+        <thead>
             <tr>
-                <td> {{wypozyczenie.0}}</td>
-                <td> {{wypozyczenie.1}}</td>
-                <td> {{wypozyczenie.2}}</td>
-                <td> {{wypozyczenie.3}}</td>
-                <td> {{wypozyczenie.4}}</td>
-                <td> {{wypozyczenie.5}}</td>
-                <td> {{wypozyczenie.6}}</td>
+                <th>imie</th>
+                <th>nazwisko</th>
+                <th>tytuł</th>
+                <th>imie autora</th>
+                <th>nazwisko autora</th>
+                <th>data wypożyczenia</th>
+                <th>data zwrotu</th>
             </tr>
-        {% endfor %}
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            {% for wypozyczenie in wypozyczenia %}
+                <tr>
+                    <td> {{wypozyczenie.0}}</td>
+                    <td> {{wypozyczenie.1}}</td>
+                    <td> {{wypozyczenie.2}}</td>
+                    <td> {{wypozyczenie.3}}</td>
+                    <td> {{wypozyczenie.4}}</td>
+                    <td> {{wypozyczenie.5}}</td>
+                    <td> {{wypozyczenie.6}}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 
-{% else %}
-    <p>Brak wyników.</p>
-{% endif %}
+        {% else %}
+            <p>Brak wyników.</p>
+        {% endif %}
 {% endblock %}
