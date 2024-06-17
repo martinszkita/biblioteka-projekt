@@ -1,5 +1,8 @@
 venv/
 a.sql
-baza_danych/
+baza_danych/biblioteka
 .vscode/
 biblioteka/biblioteka/__pycache__/*.pyc
+*.txt
+ss/
+*.pem
