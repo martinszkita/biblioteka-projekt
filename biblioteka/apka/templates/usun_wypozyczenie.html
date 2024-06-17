@@ -1,0 +1,29 @@
+<!-- your_template.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Usuń wypożyczenie</title>
+</head>
+<body>
+    <header>
+        <a href="{% url 'home' %}">
+            <button>Home</button>
+        </a>
+    </header>
+    <h2>Usuń wypożyczenie</h2>
+    
+    <form method="GET">
+        <select name='wypozyczenie_id'>
+        {%if not wypozyczenia%}
+            <option value='brak wypozyczeń'>brak wypozyczeń</option>
+
+        {% endif %}
+
+        {% for wypozyczenie in wypozyczenia %}
+            <option value={{wypozyczenie.0}}>{{ wypozyczenie.1 }}  {{ wypozyczenie.2 }} {{ wypozyczenie.3 }} {{ wypozyczenie.4 }} {{ wypozyczenie.5 }}{{ wypozyczenie.6 }} {{ wypozyczenie.7 }} </option>
+        {% endfor %}
+        </select>
+        <button type='submit'>Usun</button>
+    </form>
+</body>
+</html>

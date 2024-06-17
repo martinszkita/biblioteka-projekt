@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <header>
+        <a href="{% url 'home' %}">
+            <button>Home</button>
+        </a>
+    </header>
+    <form method="GET">
+        <select name="autor_id">
+            <option value='dowolne'>dowolne</option>
+            {%for autor in autorzy%}
+                <option value={{autor.2}}>{{autor.0}} {{autor.1}}</option>
+            {%endfor%}
+        </select>
+        <select name="gatunek_id">
+            <option value='dowolne'>dowolne</option>
+            {%for gatunek in gatunki%}
+                <option value={{gatunek.1}}>{{gatunek.0}}</option>
+            {%endfor%}
+        </select>
+        <button type='submit'>Wyszukaj</button>
+    </form>
+
+    <h1>Spis książek</h1>
+    {% if ksiazki %}
+    <table>
+        <thead>
+            <tr>    
+                <th>tytuł</th>
+                <th>imie</th>
+                <th>nazwisko</th>
+                <th>gatunek</th>
+                <th>opis</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for ksiazka in ksiazki %}
+                <tr>
+                    <td> {{ksiazka.4}}</td>
+                    <td> {{ksiazka.0}}</td>
+                    <td> {{ksiazka.1}}</td>
+                    <td> {{ksiazka.2}}</td>
+                    <td> {{ksiazka.3}}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+        {% else %}
+            <p>Brak wyników.</p>
+        {% endif %}
+{% endblock %}

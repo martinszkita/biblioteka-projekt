@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{%block content%}
+<h1>Home</h1>
+<form action="{% url 'apka:logout' %}" method="post">
+    {% csrf_token %}
+    <button type="submit">Logout</button>
+</form>
+
+<button onclick="location.href='{% url 'wykaz_ksiazek' %}'">Wykaz Książek</button>
+<button onclick="location.href='{% url 'wyszukiwanie' %}'">Wyszukiwanie</button>
+
+{% if username == "bibliotekarz" %}
+<button onclick="location.href='{% url 'wykaz_wypozyczen' %}'">Wykaz wypożyczeń</button>
+<button onclick="location.href='{% url 'dodaj_wypozyczenie' %}'">Dodaj wypożyczenie</button>
+<button onclick="location.href='{% url 'usun_wypozyczenie' %}'">Usuń wypożyczenie</button>
+{% endif %}
+
+<p>Jesteś zalogowany jako {{username}} .</p>
+</body>
+
+{% endblock content %}

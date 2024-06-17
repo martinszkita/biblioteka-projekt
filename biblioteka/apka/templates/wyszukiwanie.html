@@ -1,0 +1,51 @@
+<!-- wyszukiwanie.html -->
+{% extends 'base.html' %}
+
+{% block content %}
+
+<header>
+    <a href="{% url 'home' %}">
+        <button>Home</button>
+    </a>
+</header>
+
+<h1>Wyszukiwanie książek</h1>
+<form method="GET" action="{% url 'wyszukiwanie' %}">
+    <select name="search_by">
+        <option value="tytul">Tytuł</option>
+        <option value="opis">Opis</option> 
+        <option value="autor">Autor</option> 
+    </select>
+    <input type="text" name="query" placeholder="Wpisz szukaną frazę">
+    <button type="submit">Szukaj</button>
+    <button type="button" onclick="document.getElementsByName('query')[0].value = '';">Wyczyść</button>
+</form>
+{% if results %}
+<h2>Wyniki wyszukiwania:</h2>
+<table>
+    <thead>
+        <tr>
+            <th>tytuł</th>
+            <th>imie</th>
+            <th>nazwisko</th>
+            <th>gatunek</th>
+            <th>opis</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for book in results %}
+            <tr>
+                <td> {{book.0}}</td>
+                <td> {{book.1}}</td>
+                <td> {{book.2}}</td>
+                <td> {{book.3}}</td>
+                <td> {{book.4}}</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% else %}
+    <p>Brak wyników.</p>
+{% endif %}
+{% endblock %}
