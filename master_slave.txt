@@ -1,0 +1,35 @@
+docker network create NET
+
+docker run --name master -e MYSQL_ROOT_PASSWORD=1234 -e MYSQL_DATABASE=MY --network=NET -p 3307:3306 -d mysql:latest --server_id=1 --log-bin=mysql-bin
+
+docker exec -it master mysql -u root -p
+
+CREATE USER 'replicator'@'%' IDENTIFIED WITH mysql_native_password BY 'REP';
+GRANT REPLICATION SLAVE ON *.* TO 'replicator'@'%';
+FLUSH PRIVILEGES;
+
+SHOW MASTER STATUS; // spisujemy file i position
+
+docker run --name slave -e MYSQL_ROOT_PASSWORD=1234 -e MYSQL_DATABASE=MY --network=NET  -p 3308:3306 -d mysql:latest --server_id=2 --log-bin=mysql-bin
+
+docker exec -it slave mysql -u root -p
+
+STOP SLAVE;
+CHANGE MASTER TO MASTER_HOST='master', MASTER_USER='replicator', MASTER_PASSWORD='REP', MASTER_LOG_FILE='mysql-bin.000003', MASTER_LOG_POS= 840;
+START SLAVE;
+
+//TEST
+// NA MASTERZE
+
+CREATE DATABASE test_replication;
+USE test_replication;
+CREATE TABLE test_table (id INT AUTO_INCREMENT PRIMARY KEY, value VARCHAR(255));
+INSERT INTO test_table (value) VALUES ('Hello, bulbul!');
+
+//NA SLAVE
+
+SHOW DATABASES;
+USE test_replication;
+SELECT * FROM test_table;
+
+
